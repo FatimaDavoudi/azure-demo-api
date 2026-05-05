@@ -1,0 +1,34 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '8.x'
+
+- script: dotnet restore
+  displayName: 'Restore'
+
+- script: dotnet build --configuration $(buildConfiguration)
+  displayName: 'Build'
+
+- script: dotnet publish -c Release -o publish
+  displayName: 'Publish'
+
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: 'azure-connection'
+    appName: 'fd-api-demo-2026'
+    package: 'publish'
