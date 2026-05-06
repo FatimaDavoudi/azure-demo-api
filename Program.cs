@@ -42,7 +42,8 @@ app.MapGet("/weatherforecast", () =>
 
 app.MapGet("/api/test", () =>
 {
-    return "Hello from Fatemeh API 🚀";
+   // return "Hello from Fatemeh API 🚀";
+   return "CI/CD is working 🚀";
 });
 
 
